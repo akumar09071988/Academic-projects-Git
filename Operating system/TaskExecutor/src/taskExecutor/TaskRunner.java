@@ -4,12 +4,12 @@ import java.util.concurrent.BlockingQueue;
 
 public class TaskRunner implements Runnable{
 	
-	private  BlockingQueue<Task> blockQueue = null;
+	private  BlockingFiniteQueue blockQueue = null;
 	
 	
 	
 
-	public TaskRunner(BlockingQueue<Task> blockQueue) {
+	public TaskRunner(BlockingFiniteQueue blockQueue) {
 		super();
 		this.blockQueue = blockQueue;
 	}
@@ -24,7 +24,7 @@ public class TaskRunner implements Runnable{
 		{
 			while(true)
 			{
-				Task tsk = this.blockQueue.take();
+				Task tsk = (Task) this.blockQueue.take();
 				if(tsk!=null)
 				{
 					System.out.println(Thread.currentThread().getName());

@@ -12,7 +12,8 @@ public class TaskExecutorImpl implements TaskExecutor{
 	
 	private static TaskExecutorImpl instance = null; 
 	private  int threadNum                 = 0;
-	private  BlockingQueue<Task> blockQueue = null;
+	//private  BlockingQueue<Task> blockQueue = null;
+	private  BlockingFiniteQueue<Task> blockQueue=null;
 	private  Stack<Thread> threadPool;
 	
 	protected TaskExecutorImpl()
@@ -26,7 +27,7 @@ public class TaskExecutorImpl implements TaskExecutor{
 		{
 			instance = new TaskExecutorImpl();
 			instance.threadNum = noThreads;
-			instance.blockQueue = new LinkedBlockingQueue<Task>();
+			instance.blockQueue =  new BlockingFiniteQueue();                                               //new LinkedBlockingQueue<Task>();
 			instance.threadPool = new  Stack<Thread>();
 			for(int i=0;i<instance.threadNum;i++)
 			{
@@ -44,7 +45,7 @@ public class TaskExecutorImpl implements TaskExecutor{
 	public void addTask(Task task) {
 		try
 		{
-			instance.blockQueue.put(task);
+			instance.blockQueue.append(task);
 			
 		}
 		catch(Exception e)
